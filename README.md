@@ -108,3 +108,79 @@ Save hours of manual log review and IP tracking
 Strengthen server security with immediate blocking and responsible reporting
 Contribute to a safer internet by proactively notifying abuse teams
 Learn and apply automation and sysadmin best practices tailored for DirectAdmin
+
+
+<h2>Setup: Installing <code>Fail2Ban</code> and <code>whois</code></h2>
+
+<h3>1. Install Fail2Ban</h3>
+<p>
+<strong>Debian/Ubuntu:</strong>
+</p>
+<pre><code>sudo apt update
+sudo apt install fail2ban
+</code></pre>
+<p>
+<strong>CentOS/RHEL:</strong>
+</p>
+<pre><code>sudo yum install epel-release
+sudo yum install fail2ban
+</code></pre>
+
+<h3>2. Basic Configuration for Fail2Ban</h3>
+<ul>
+  <li>
+    Copy the default config to a local file for editing:
+    <pre><code>sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local</code></pre>
+  </li>
+  <li>
+    Edit the local jail settings to enable protection for SSH (and optionally customize for DirectAdmin):
+    <pre><code>sudo nano /etc/fail2ban/jail.local</code></pre>
+    <p>
+      Example: To enable jail for SSH (already enabled by default in many installs):
+    </p>
+    <pre><code>[sshd]
+enabled = true
+port = ssh
+bantime = 3600
+findtime = 600
+maxretry = 5
+</code></pre>
+  </li>
+  <li>
+    <strong>Restart Fail2Ban:</strong>
+    <pre><code>sudo systemctl restart fail2ban</code></pre>
+  </li>
+  <li>
+    <strong>Check status:</strong>
+    <pre><code>sudo fail2ban-client status
+sudo fail2ban-client status sshd
+</code></pre>
+  </li>
+</ul>
+<p>
+For advanced log monitoring (e.g., for DirectAdmin smtp/da-pop3d), custom jails can be added. See <a href="https://www.fail2ban.org/wiki/index.php/Main_Page" target="_blank">Fail2Ban official docs</a>.
+</p>
+
+<h3>3. Install whois</h3>
+<p>
+<strong>Debian/Ubuntu:</strong>
+</p>
+<pre><code>sudo apt install whois
+</code></pre>
+<p>
+<strong>CentOS/RHEL:</strong>
+</p>
+<pre><code>sudo yum install whois
+</code></pre>
+
+<h3>4. Verify Installation</h3>
+<ul>
+  <li>
+    <strong>Fail2Ban version:</strong>
+    <pre><code>fail2ban-client -V</code></pre>
+  </li>
+  <li>
+    <strong>whois version/test:</strong>
+    <pre><code>whois google.com</code></pre>
+  </li>
+</ul>
