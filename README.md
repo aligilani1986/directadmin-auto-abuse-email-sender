@@ -1,4 +1,3 @@
-# directadmin-auto-abuse-email-sender
 <h1>Automated Abuse Reporting for DirectAdmin 🚨🤖</h1>
 
 <p><strong>Automatically detect, report, and block brute-force attack IPs on DirectAdmin servers</strong></p>
