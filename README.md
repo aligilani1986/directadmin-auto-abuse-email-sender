@@ -45,6 +45,62 @@ This script is designed for system administrators using DirectAdmin who want to 
 
 <hr>
 
+<h2>Setup: Configuring <code>mailx</code> with Gmail (Google SMTP)</h2>
+
+<h3>1. Install mailx</h3>
+<p>
+<strong>Debian/Ubuntu:</strong>
+</p>
+<pre><code>sudo apt update
+sudo apt install mailutils
+</code></pre>
+<p>
+<strong>CentOS/RHEL:</strong>
+</p>
+<pre><code>sudo yum install mailx
+</code></pre>
+
+<h3>2. Configure <code>mailx</code> to Use Gmail’s SMTP</h3>
+<p>
+Edit (or create) the mailx configuration file:
+</p>
+
+<pre><code>sudo nano /etc/mail.rc
+</code></pre>
+<p>
+Add these lines (replace with your Gmail address and <strong>App Password</strong>):
+</p>
+
+<pre><code>set smtp=smtps://smtp.gmail.com:465
+set smtp-auth=login
+set smtp-auth-user=your@gmail.com
+set smtp-auth-password=YOUR_APP_PASSWORD
+set from="your@gmail.com"
+set ssl-verify=ignore
+</code></pre>
+
+<ul>
+    <li>
+        <strong>Important:</strong> You <strong>must</strong> use a <a href="https://support.google.com/accounts/answer/185833" target="_blank">Google App Password</a> (not your main password). Google Account → Security → "App passwords" → generate for Mail.
+    </li>
+</ul>
+
+<h3>3. Test <code>mailx</code> Sending via Gmail</h3>
+<pre><code>echo "This is a test email from mailx and Gmail SMTP." | mail -s "Test Mail" your@gmail.com
+</code></pre>
+<p>
+Or for verbose output:
+</p>
+<pre><code>echo "Mailx is working." | mail -v -s "Mailx Test with Gmail" your@gmail.com
+</code></pre>
+
+<h3>4. Troubleshooting</h3>
+<ul>
+    <li>Ensure you use the App Password (not your Gmail login password)</li>
+    <li>Check <code>ssl-verify=ignore</code> is included for compatibility</li>
+    <li>Confirm the config path: <code>/etc/mail.rc</code> or <code>~/.mailrc</code></li>
+    <li>Ensure outbound port <strong>465</strong> is open on your server firewall</li>
+</ul>
 <p>
 <strong>Get started in minutes and take your hosting security to the next level!</strong>
 </p>Why Use This Project?
